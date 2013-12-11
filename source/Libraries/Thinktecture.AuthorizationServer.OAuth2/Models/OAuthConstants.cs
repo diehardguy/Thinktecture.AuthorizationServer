@@ -15,6 +15,7 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             public const string RefreshToken = "refresh_token";
             public const string Saml2 = "urn:ietf:params:oauth:grant-type:saml2-bearer";
             public const string JwtBearer = "urn:ietf:params:oauth:grant-type:jwt-bearer";
+            public const string Assertion = "assertion";
         }
 
         public static class ResponseTypes

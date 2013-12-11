@@ -33,5 +33,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
 
         [JsonProperty(PropertyName = "assertion")]
         public string Assertion { get; set; }
+
+        [JsonProperty(PropertyName = "assertion_type")]
+        public string Assertion_Type { get; set; }
     }
 }

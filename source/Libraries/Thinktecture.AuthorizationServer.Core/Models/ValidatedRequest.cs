@@ -19,6 +19,8 @@ namespace Thinktecture.AuthorizationServer.Models
         public string GrantType { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
+        public string Assertion { get; set; }
+        public string Assertion_Type { get; set; }
         public string AuthorizationCode { get; set; }
         public string RefreshToken { get; set; }
         public StoredGrant StoredGrant { get; set; }

@@ -55,7 +55,8 @@ namespace Thinktecture.AuthorizationServer.OAuth2
             if (request.Grant_Type == OAuthConstants.GrantTypes.AuthorizationCode ||
                 request.Grant_Type == OAuthConstants.GrantTypes.ClientCredentials ||
                 request.Grant_Type == OAuthConstants.GrantTypes.RefreshToken ||
-                request.Grant_Type == OAuthConstants.GrantTypes.Password)
+                request.Grant_Type == OAuthConstants.GrantTypes.Password ||
+                request.Grant_Type == OAuthConstants.GrantTypes.Assertion)
             {
                 validatedRequest.GrantType = request.Grant_Type;
                 Tracing.Information("Grant type: " + validatedRequest.GrantType);
@@ -94,6 +95,9 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                     break;
                 case OAuthConstants.GrantTypes.ClientCredentials:
                     ValidateClientCredentialsGrant(validatedRequest, request);
+                    break;
+                case OAuthConstants.GrantTypes.Assertion:
+                    ValidateAssertionGrant(validatedRequest, request);
                     break;
                 default:
                     throw new TokenRequestValidationException(
@@ -203,6 +207,33 @@ namespace Thinktecture.AuthorizationServer.OAuth2
                 validatedRequest.Password = request.Password;
 
                 Tracing.Information("Resource owner: " + request.UserName);
+            }
+        }
+
+        private void ValidateAssertionGrant(ValidatedRequest validatedRequest, TokenRequest request)
+        {
+            if (validatedRequest.Client.Flow != OAuthFlow.ResourceOwner)
+            {
+                throw new TokenRequestValidationException(
+                    "Resource owner password flow not allowed for client",
+                    OAuthConstants.Errors.UnauthorizedClient);
+            }
+
+            ValidateScopes(validatedRequest, request);
+
+            // extract username and password
+            if (string.IsNullOrWhiteSpace(request.Assertion) || string.IsNullOrWhiteSpace(request.Assertion_Type))
+            {
+                throw new TokenRequestValidationException(
+                    "Missing Assertion or Assertion Type.",
+                    OAuthConstants.Errors.InvalidGrant);
+            }
+            else
+            {
+                validatedRequest.Assertion = request.Assertion;
+                validatedRequest.Assertion_Type = request.Assertion_Type;
+
+                Tracing.Information("Resource owner: " + request.Assertion + "@" + request.Assertion);
             }
         }
 

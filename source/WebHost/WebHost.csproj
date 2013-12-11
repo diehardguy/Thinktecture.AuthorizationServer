@@ -352,8 +352,12 @@
     <Content Include="Areas\UserApplications\Views\Shared\Nav.cshtml" />
     <Content Include="Areas\Admin\Views\Key\X509Key.cshtml" />
     <None Include="Content\Site.less" />
-    <Content Include="Configuration\identityModel.config" />
-    <Content Include="Configuration\identityModel.services.config" />
+    <Content Include="Configuration\identityModel.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configuration\identityModel.services.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configuration\tracing.config">
       <SubType>Designer</SubType>
     </Content>
@@ -461,7 +465,16 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>7411</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost/AuthServer</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
